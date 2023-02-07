@@ -20,6 +20,8 @@ setup(
     tests_require=['pytest'],
     entry_points={
         'console_scripts': [
+            'uv_cam_pub = uv_camera.uv_cam_pub:main',
+            'uv_cam_sub = uv_camera.uv_cam_sub:main',
         ],
     },
 )
