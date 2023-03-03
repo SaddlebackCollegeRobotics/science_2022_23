@@ -20,6 +20,8 @@ setup(
     tests_require=['pytest'],
     entry_points={
         'console_scripts': [
+            'talker = funnel_cake.funnel_cake_publisher:main',
+            'listener = funnel_cake.funnel_cake_subscriber:main',
         ],
     },
 )
