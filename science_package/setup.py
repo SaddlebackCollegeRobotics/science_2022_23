@@ -20,6 +20,7 @@ setup(
     tests_require=['pytest'],
     entry_points={
         'console_scripts': [
+            'science_srv = science_package.science_servicer:main',
         ],
     },
 )
