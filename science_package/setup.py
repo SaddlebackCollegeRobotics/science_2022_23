@@ -1,6 +1,6 @@
 from setuptools import setup
 
-package_name = 'water_pump'
+package_name = 'science_package'
 
 setup(
     name=package_name,
@@ -13,13 +13,15 @@ setup(
     ],
     install_requires=['setuptools'],
     zip_safe=True,
-    maintainer='ubuntu',
-    maintainer_email='ubuntu@todo.todo',
+    maintainer='jasper',
+    maintainer_email='49565505+wluxie@users.noreply.github.com',
     description='TODO: Package description',
     license='TODO: License declaration',
     tests_require=['pytest'],
     entry_points={
         'console_scripts': [
+            'science_srv = science_package.science_servicer:main',
+            'science_cli = science_package.science_client:main',
         ],
     },
 )

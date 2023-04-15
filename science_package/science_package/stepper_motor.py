@@ -1,6 +1,7 @@
 from ticlib import TicUSB
 from time import sleep
 
+
 class StepperMotor:
     def __init__(self):
         self.tic = TicUSB()
