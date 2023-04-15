@@ -21,6 +21,7 @@ setup(
     entry_points={
         'console_scripts': [
             'science_srv = science_package.science_servicer:main',
+            'science_cli = science_package.science_client:main',
         ],
     },
 )
