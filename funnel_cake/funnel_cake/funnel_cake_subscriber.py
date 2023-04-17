@@ -7,7 +7,7 @@ from std_msgs.msg import Int64MultiArray
 # General imports
 from time import perf_counter
 import math
-from .funnel_cake_controller import *
+from ...science_package.science_package.lib.funnel_cake_controller import *
 import signal
 
 
