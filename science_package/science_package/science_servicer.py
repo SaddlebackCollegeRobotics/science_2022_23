@@ -9,34 +9,68 @@ from rclpy.node import Node
 import threading
 
 
-
 class ScienceService(Node):
+    """
+    A ROS 2 service that provides different functionality to interact with Science package.
+
+    Attributes
+    ----------
+    FC_POS : List[int]
+        List of integer values representing the positions of the funnel cake.
+
+    Methods
+    -------
+    __init__()
+        Initializes the node, the service and initializes instances of stepper motor, MOSFET and funnel cake controller.
+    print_menu()
+        Prints the menu options to choose from.
+    add_two_ints_callback(request, response)
+        The callback function to handle incoming requests and execute the chosen option.
+    """
 
     FC_POS = [-11000, -5275, 250, 5875, 11500]
 
     def __init__(self):
+        """
+        Initializes the node, the service and initializes instances of stepper motor, MOSFET and funnel cake controller.
+        """
         super().__init__('science_servicer')
         self.srv = self.create_service(AddTwoInts, 'science/science_package', self.add_two_ints_callback)
 
         self.stepper_motor = StepperMotor()
         self.mosfet = Mosfet()
         self.funnel_cake = Motor_Controller(
-            rc = Roboclaw(COMPORT_NAME_1, 115200),
-            address = 0x80  
+            rc=Roboclaw(COMPORT_NAME_1, 115200),
+            address=0x80
         )
 
         print("\n\nScience Package is up\n")
         self.print_menu()
 
-    
     def print_menu(self):
+        """
+        Prints the menu options to choose from.
+        """
         print("\n\n\n\n\n\n\n\n\n\n\n")
         print("1) Lower Platform\t\t<t=0>\n2) Raise Platform\t\t<t=0>\n3) Pump Request\t\t\t<t=time(s)>\n4) Vacuum Request\t\t<t=time(s)>\n5) Set pos funnel_cake[i]\t<t=index>")
 
-
     def add_two_ints_callback(self, request, response):
+        """
+        The callback function to handle incoming requests and execute the chosen option.
 
-        response.sum = 1        # Valid request
+        Parameters
+        ----------
+        request : AddTwoInts.Request
+            The incoming request with two integer values representing the choice and time for that choice.
+        response : AddTwoInts.Response
+            The response to be sent back to the client with a single integer value representing the status of the request.
+
+        Returns
+        -------
+        AddTwoInts.Response
+            The response with a single integer value representing the status of the request.
+        """
+        response.sum = 1  # Valid request
 
         if (request.a == 1):
             print("\n🪜 Lowering Platform for UV 🪜\n")
@@ -68,6 +102,9 @@ class ScienceService(Node):
 
 
 def main(args=None):
+    """
+    Main function that initializes the ScienceService node and starts the ROS2 spin loop.
+    """
     rclpy.init(args=args)
     service = ScienceService()
     rclpy.spin(service)
