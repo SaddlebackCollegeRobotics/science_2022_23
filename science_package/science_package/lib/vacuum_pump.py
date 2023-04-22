@@ -8,7 +8,7 @@ class Mosfet:
 
     def __init__(self):
         GPIO.setmode(GPIO.BOARD)
-        GPIO.setup(Mosfet.PUMP, GPIO.OUT)import RPi.GPIO as GPIO
+        GPIO.setup(Mosfet.PUMP, GPIO.OUT)
 import time
 
 
