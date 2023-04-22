@@ -1,5 +1,5 @@
 from dataclasses import dataclass
-from roboclaw_3 import Roboclaw
+from .roboclaw_3 import Roboclaw
 
 # Windows comport name - "COM8"
 # Linux comport name - "/dev/ttyACM1"
