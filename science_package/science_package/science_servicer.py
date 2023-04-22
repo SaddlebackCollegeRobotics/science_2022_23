@@ -1,40 +1,37 @@
 from example_interfaces.srv import AddTwoInts
-from .stepper_motor import StepperMotor
-from .camera import Camera
-from .vacuum_pump import Mosfet
+from .lib.stepper_motor import StepperMotor
+from .lib.vacuum_pump import Mosfet
+from .lib.funnel_cake_controller import *
 
 import rclpy
 from rclpy.node import Node
 
+import threading
+
+
 
 class ScienceService(Node):
+
+    FC_POS = [-11000, -5275, 250, 5875, 11500]
 
     def __init__(self):
         super().__init__('science_servicer')
         self.srv = self.create_service(AddTwoInts, 'science/science_package', self.add_two_ints_callback)
 
         self.stepper_motor = StepperMotor()
-        self.camera = Camera()
         self.mosfet = Mosfet()
+        self.funnel_cake = Motor_Controller(
+            rc = Roboclaw(COMPORT_NAME_1, 115200),
+            address = 0x80  
+        )
+
+        print("\n\nScience Package is up\n")
+        self.print_menu()
 
     
-    def step_uv_down(self):
-        self.stepper_motor.stepUV(True)
-
-    def step_uv_up(self):
-        self.stepper_motor.stepUV(False)
-
-    def start_recording(self):
-        self.camera.record()
-
-    def stop_recording(self):
-        self.camera.close()
-
-    def pump(self, t:float):
-        self.mosfet.pump(t)
-
-    def vacuum(self, t:float):
-        self.mosfet.vacuum(t)
+    def print_menu(self):
+        print("\n\n\n\n\n\n\n\n\n\n\n")
+        print("1) Lower Platform\t\t<t=0>\n2) Raise Platform\t\t<t=0>\n3) Pump Request\t\t\t<t=time(s)>\n4) Vacuum Request\t\t<t=time(s)>\n5) Set pos funnel_cake[i]\t<t=index>")
 
 
     def add_two_ints_callback(self, request, response):
@@ -43,32 +40,29 @@ class ScienceService(Node):
 
         if (request.a == 1):
             print("\n🪜 Lowering Platform for UV 🪜\n")
-            self.step_uv_down()
+            self.stepper_motor.stepUV(True)
 
         elif (request.a == 2):
             print("\n🪜 Raising Platform from UV 🪜\n")
-            self.step_uv_up()
+            self.stepper_motor.stepUV(False)
 
         elif (request.a == 3):
-            print("\n📸🤨 Caught on Camera 🤨📸\n")
-            self.start_recording()
+            print("\n💦😳 💦😳  oh?  💦😳 💦😳\n")
+            self.mosfet.pump(request.b)
 
         elif (request.a == 4):
-            print("\n📷😭 Camera is off 😭\n")
-            self.stop_recording()
-
-        elif (request.a == 5):
-            print("\n💦😳 💦😳  oh?  💦😳 💦😳\n")
-            self.pump(request.b)
-
-        elif (request.a == 6):
             print("\n👄💨 👄💨  OH?  👄💨 👄💨\n")
-            self.vacuum(request.b)
+            self.mosfet.vacuum(request.b)
+
+        elif (request.a == 5):  # Set position of funnel cake
+            print("Set position funnel_cake[" + "]")
+            set_turret_rotation(self.funnel_cake, ScienceService.FC_POS[request.b])
 
         else:
             response.sum = 0    # Invalid request
 
         self.get_logger().info('Incoming request\nChoice: %d Time: %d s\n' % (request.a, request.b))
+        self.print_menu()
 
         return response
 
