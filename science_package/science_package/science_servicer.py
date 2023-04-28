@@ -30,6 +30,7 @@ class ScienceService(Node):
 
     FC_POS = [-11000, -5275, 250, 5875, 11500]
 
+
     def __init__(self):
         """
         Initializes the node, the service and initializes instances of stepper motor, MOSFET and funnel cake controller.
@@ -47,12 +48,54 @@ class ScienceService(Node):
         print("\n\nScience Package is up\n")
         self.print_menu()
 
+
     def print_menu(self):
         """
         Prints the menu options to choose from.
         """
         print("\n\n\n\n\n\n\n\n\n\n\n")
         print("1) Lower Platform\t\t<t=0>\n2) Raise Platform\t\t<t=0>\n3) Pump Request\t\t\t<t=time(s)>\n4) Vacuum Request\t\t<t=time(s)>\n5) Set pos funnel_cake[i]\t<t=index>")
+
+
+    def lower_platform(self, b = None):
+        """
+        Lowers the platform for UV exposure.
+        """
+        print("\n🪜 Lowering Platform for UV 🪜\n")
+        self.stepper_motor.stepUV(True)
+
+
+    def raise_platform(self, b = None):
+        """
+        Raises the platform after UV exposure.
+        """
+        print("\n🪜 Raising Platform from UV 🪜\n")
+        self.stepper_motor.stepUV(False)
+
+
+    def pump_request(self, time):
+        """
+        Turns on the MOSFET to pump water out for a given time.
+        """
+        print("\n💦😳 💦😳  oh?  💦😳 💦😳\n")
+        self.mosfet.pump(time)
+
+
+    def vacuum_request(self, time):
+        """
+        Turns on the MOSFET to vacuum dirt sample out for a given time.
+        """
+        print("\n👄💨 👄💨  OH?  👄💨 👄💨\n")
+        self.mosfet.vacuum(time)
+
+    
+    def set_pos_funnel_cake(self, index):
+        """
+        Sets the position of the funnel cake to the given index.
+        """
+        print("Set position funnel_cake[" + "]")
+        set_turret_rotation(self.funnel_cake, ScienceService.FC_POS[index])
+
 
     def add_two_ints_callback(self, request, response):
         """
@@ -68,37 +111,27 @@ class ScienceService(Node):
         Returns
         -------
         AddTwoInts.Response
-            The response with a single integer value representing the status of the request.
+            The response to be sent back to the client with a single integer value representing the status of the request.
         """
-        response.sum = 1  # Valid request
 
-        if (request.a == 1):
-            print("\n🪜 Lowering Platform for UV 🪜\n")
-            self.stepper_motor.stepUV(True)
+        call = { 1: self.lower_platform,
+                 2: self.raise_platform,
+                 3: self.pump_request,
+                 4: self.vacuum_request,
+                 5: self.set_pos_funnel_cake
+        }
 
-        elif (request.a == 2):
-            print("\n🪜 Raising Platform from UV 🪜\n")
-            self.stepper_motor.stepUV(False)
-
-        elif (request.a == 3):
-            print("\n💦😳 💦😳  oh?  💦😳 💦😳\n")
-            self.mosfet.pump(request.b)
-
-        elif (request.a == 4):
-            print("\n👄💨 👄💨  OH?  👄💨 👄💨\n")
-            self.mosfet.vacuum(request.b)
-
-        elif (request.a == 5):  # Set position of funnel cake
-            print("Set position funnel_cake[" + "]")
-            set_turret_rotation(self.funnel_cake, ScienceService.FC_POS[request.b])
-
-        else:
-            response.sum = 0    # Invalid request
-
+        try:
+            call.get(request.a)(request.b)
+            response.sum = 1
+        except:
+            response.sum = 0
+        
         self.get_logger().info('Incoming request\nChoice: %d Time: %d s\n' % (request.a, request.b))
         self.print_menu()
 
         return response
+
 
 
 def main(args=None):
@@ -109,6 +142,7 @@ def main(args=None):
     service = ScienceService()
     rclpy.spin(service)
     rclpy.shutdown()
+
 
 
 if __name__ == '__main__':
