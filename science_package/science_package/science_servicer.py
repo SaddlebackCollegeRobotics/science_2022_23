@@ -77,7 +77,7 @@ class ScienceService(Node):
         """
         Turns on the MOSFET to pump water out for a given time.
         """
-        print("\n💦😳 💦😳  oh?  💦😳 💦😳\n")
+        print("\n💦😳 💦😳 PUMPING 💦😳 💦😳\n")
         self.mosfet.pump(time)
 
 
@@ -85,7 +85,7 @@ class ScienceService(Node):
         """
         Turns on the MOSFET to vacuum dirt sample out for a given time.
         """
-        print("\n👄💨 👄💨  OH?  👄💨 👄💨\n")
+        print("\n👄💨 👄💨 VACUUMING 👄💨 👄💨\n")
         self.mosfet.vacuum(time)
 
     
