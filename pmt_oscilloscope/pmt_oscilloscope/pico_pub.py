@@ -36,6 +36,7 @@ class PicoPub(Node):
         msg = Float64MultiArray()                   # Create message
 
         print('Capturing data...')
+        self.osc.open_unit()                        # Open unit
         self.osc.capture()                          # Capture data
         time, adc2mVChA, _ = self.osc.get_data()    # Get data
         self.osc.close_unit()                       # Close unit

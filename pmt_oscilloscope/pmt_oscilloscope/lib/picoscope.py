@@ -44,17 +44,12 @@ class Oscilloscope:
         self.max_sample_ret = None
         self.time_indisposed_ms = None
 
-        self.status["openUnit"] = ps.ps2000_open_unit()
-        assert_pico2000_ok(self.status["openUnit"])
-
 
     def capture(self) -> None:
         '''
         This function is the main function that will be called to capture
             data from the oscilloscope.
         '''
-        self.chandle = self.open_unit()
-
         self.set_channel_A()
         self.set_channel_B()
 
@@ -63,18 +58,17 @@ class Oscilloscope:
         self.get_timebase()
 
         self.block_capture()
-
         # self.plot(*self.get_data())
 
 
-
-
-    def open_unit(self) -> ctypes.c_int16:
+    def open_unit(self) -> None:
         '''
         Open 2000 series PicoScope
         Returns handle to chandle for use in future API functions
         '''
-        return ctypes.c_int16(self.status["openUnit"])
+        self.status["openUnit"] = ps.ps2000_open_unit()
+        assert_pico2000_ok(self.status["openUnit"])
+        self.chandle = ctypes.c_int16(self.status["openUnit"])
     
 
     def set_channel_A(self) -> None:
