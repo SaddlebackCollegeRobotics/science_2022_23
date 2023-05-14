@@ -35,15 +35,16 @@ class PicoPub(Node):
     def timer_callback(self):
         msg = Float64MultiArray()                   # Create message
 
+        print('Capturing data...')
         self.osc.capture()                          # Capture data
         time, adc2mVChA, _ = self.osc.get_data()    # Get data
         self.osc.close_unit()                       # Close unit
 
+        print('Publishing data...\n\n')
         for t, v in zip(time, adc2mVChA):           # Append data to message
             msg.data.append(t)                      #   Time
             msg.data.append(v)                      #   Channel A Voltages
-
-        self.publisher_.publish(msg)
+        self.publisher_.publish(msg)                # Publish message
 
 
 

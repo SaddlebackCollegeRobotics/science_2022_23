@@ -247,4 +247,4 @@ class Oscilloscope:
         assert_pico2000_ok(self.status["close"])
 
         # display status returns
-        print(self.status)
+        print('\tStatus: ', self.status)

@@ -37,7 +37,7 @@ class PicoSub(Node):
         print('\tHighest Voltage: ', np.max(voltages), ' mV')
         print('\tLowest Voltage: ', np.min(voltages), ' mV')
         
-        print('Plotting data...')
+        print('Plotting data...\n\n')
         plt.plot(time, voltages)
         plt.xlabel('Time (ns)')
         plt.ylabel('Voltage (mV)')
