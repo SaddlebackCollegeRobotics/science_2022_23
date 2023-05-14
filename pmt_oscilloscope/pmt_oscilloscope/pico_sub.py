@@ -7,6 +7,8 @@
 import rclpy                                # ROS2 Python API
 from rclpy.node import Node                 # ROS2 Node API
 from std_msgs.msg import Float64MultiArray  # ROS2 Float64MultiArray message type
+import numpy as np
+import matplotlib.pyplot as plt
 
 
 class PicoSub(Node):
@@ -18,7 +20,7 @@ class PicoSub(Node):
 
         self.subscription = self.create_subscription(           # Create subscription to 'controls' topic
             Float64MultiArray,                                  # Message type
-            'drive/analog_control',                             # Topic name
+            'science/pico_data',                             # Topic name
             self.listener_callback,                             # Callback function to call when message is received
             10)                                                 # Queue size
 
@@ -28,7 +30,18 @@ class PicoSub(Node):
     #       Called when a message is received on the 'controls' topic
     # ,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
     def listener_callback(self, msg):
-        raise NotImplementedError
+        time = np.array(msg.data[0::2])
+        voltages = np.array(msg.data[1::2])
+
+        print('Received data:')
+        print('\tHighest Voltage: ', np.max(voltages), ' mV')
+        print('\tLowest Voltage: ', np.min(voltages), ' mV')
+        
+        print('Plotting data...')
+        plt.plot(time, voltages)
+        plt.xlabel('Time (ns)')
+        plt.ylabel('Voltage (mV)')
+        plt.show()
 
 
 
