@@ -6,7 +6,7 @@ make          # colcon build all
 make clean    # clean all
 ```
 
-#### Run:
+#### Science Package (Turret, Lowering Platform, Pump, Vacuum):
 ```bash
 make srv      # run server that will take actions upon request
 ```
@@ -46,4 +46,13 @@ make cli c=5 t=0    # Rotate Funnel Cake into position with index 0 (1st positio
 ### Recording
 ```bash
 make record
+```
+
+### PMT Oscilloscope
+```bash
+# Terminal 1
+make pico_sub
+
+# Terminal 2
+make pico_pub
 ```
