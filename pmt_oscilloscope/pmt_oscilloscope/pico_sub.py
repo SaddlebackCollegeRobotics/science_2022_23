@@ -43,6 +43,8 @@ class PicoSub(Node):
         print('Received data:')
         print('\tHighest Voltage: ', np.max(voltages), ' mV')
         print('\tLowest Voltage: ', np.min(voltages), ' mV')
+        print('\tAverage Voltage: ', np.mean(voltages), ' mV')
+        print('\tStandard Deviation: ', np.std(voltages), ' mV')
 
         self.line.set_data(time, voltages)
         self.ax.relim()

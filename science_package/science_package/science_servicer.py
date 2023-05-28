@@ -54,7 +54,11 @@ class ScienceService(Node):
         Prints the menu options to choose from.
         """
         print("\n\n\n\n\n\n\n\n\n\n\n")
+        print("Science Package Menu")
+        print("-" * 20)
         print("1) Lower Platform\t\t<t=0>\n2) Raise Platform\t\t<t=0>\n3) Pump Request\t\t\t<t=time(s)>\n4) Vacuum Request\t\t<t=time(s)>\n5) Set pos funnel_cake[i]\t<t=index>")
+        print("-" * 20)
+        print("Command format: `make cli c=<choice> t=<time/target>`\n\n")
 
 
     def lower_platform(self, b = None):

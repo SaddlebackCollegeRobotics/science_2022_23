@@ -1,4 +1,4 @@
-# Science Testing - May 21st, 2023
+# `science_2022_23`
 
 ## Things to check:
 - The Funnel Cake and ATP testing chamber is mounted on the turret properly and is able to rotates to each five funnels under a singular channel for soil and water deposition and positions cuvettes. The testing chamber **NEEDS TO BE** is light-sealed, ensuring that **NO** outside light goes in and annihilate our extremely photon-sensitive PMT.
@@ -8,7 +8,6 @@
     + UV Flashlight
     + Light-blocking shroud
     + Vacuum tube connected to the ATP Apparatus
-    + ***NOTE:*** The platform will NOT lowered all the way down because Sawyer recently change the height of the shroud. So the bounds in which the Lowering Platform lowers to needs to extend a little more since it is too short rn, keep that in mind. I will fix that when I have that chance.
 
 - Make sure everything is connected to **Nyx**, Raspberry Pi, and the MOSFET circuit. Below is an img of how it should look on the rover:
 
@@ -43,13 +42,7 @@
     - Power --> 12V [20A Fuse]
     - We only need MCP #3, so make sure that's properly connected to Nyx, and to the turret.
 
-
-
-## Notes:
-- Check the ***Yellow note*** I taped and left on Helios, do those.
-- I'm pretty sure I mounted the Lowering Platform but without the shroud, UV Flashlight, and the camera *(not connected to Nyx)*. So make sure to put those together and connect the camera to Nyx.
-- We won't be doing PMT testing unless the Funnel Cake is printed, light-sealed and ready to go. But we should do this last when I get 1pm - 4pm to set it up as I wasn't able to do so today Saturday.
-- Use common sense: If something is smoking, kill power. If something is off, kill power.
+-----------------
 
 ## Science Package Code
 ### General build:

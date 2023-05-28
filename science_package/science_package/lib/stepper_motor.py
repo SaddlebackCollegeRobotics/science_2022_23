@@ -83,7 +83,8 @@ class StepperMotor:
         if (flag): rotation = 1
         else: rotation = -1
 
-        for i in range(int(self.FULL_LENGTH / 2) + 3):
+        # Hardcoded, will change later... (so never unless someone found this comment)
+        for i in range(int(self.FULL_LENGTH / 2) + 13):
             self.resetPosition()
             self.tic.set_target_position(rotation * self.FULL_ROTATION)
             self.spinLoop(rotation)

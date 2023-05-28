@@ -22,3 +22,6 @@ pico_sub:
 
 record:
 	python3 uv_camera/camera.py
+
+copy:
+	scp -r /home/jasper/dev/science_2022_23/ ubuntu@nyx.local:/home/ubuntu/
