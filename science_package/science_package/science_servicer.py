@@ -40,7 +40,7 @@ class ScienceService(Node):
 
         self.stepper_motor = StepperMotor()
         self.mosfet = Mosfet()
-        self.funnel_cake = Motor_Controller(
+        self.funnel_cake = MotorController(
             rc=Roboclaw(COMPORT_NAME_1, 115200),
             address=0x80
         )
