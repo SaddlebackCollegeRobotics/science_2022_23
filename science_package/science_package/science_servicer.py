@@ -57,6 +57,7 @@ class ScienceService(Node):
         print("Science Package Menu")
         print("-" * 20)
         print("1) Lower Platform\t\t<t=0>\n2) Raise Platform\t\t<t=0>\n3) Pump Request\t\t\t<t=time(s)>\n4) Vacuum Request\t\t<t=time(s)>\n5) Set pos funnel_cake[i]\t<t=index>")
+        print("6) Lower once\t\t\t<t=0>\n7) Raise once\t\t<t=0>")
         print("-" * 20)
         print("Command format: `make cli c=<choice> t=<time/target>`\n\n")
 
@@ -75,6 +76,22 @@ class ScienceService(Node):
         """
         print("\n🪜 Raising Platform from UV 🪜\n")
         self.stepper_motor.stepUV(False)
+
+
+    def lower_once(self, b = None):
+        """
+        Lowers the platform once.
+        """
+        print("\n🪜 Lowering Platform 🪜\n")
+        self.stepper_motor.stepOnce(True)
+
+    
+    def raise_once(self, b = None):
+        """
+        Raises the platform once.
+        """
+        print("\n🪜 Raising Platform 🪜\n")
+        self.stepper_motor.stepOnce(False)
 
 
     def pump_request(self, time):
@@ -122,7 +139,9 @@ class ScienceService(Node):
                  2: self.raise_platform,
                  3: self.pump_request,
                  4: self.vacuum_request,
-                 5: self.set_pos_funnel_cake
+                 5: self.set_pos_funnel_cake,
+                 6: self.lower_once,
+                 7: self.raise_once
         }
 
         try:
